@@ -109,8 +109,8 @@ def plot_surface_3d(n, nx, ny, quantity, name):
     # Add a color bar which maps values to colors.
     fig.colorbar(surf, shrink=0.5, aspect=5)
     plt.title(name + "_n=" + str(n))
-    plt.savefig(name + "_n_" + str(n) + ".pdf")
-    plt.show()
+    plt.savefig('./' + name + "_n_" + str(n) + ".pdf")
+    #plt.show()
 
 
 A = 0.8
@@ -124,8 +124,8 @@ kx = []
 ky = []
 zak = []
 zak_real = []
-nx = 20
-ny = 20
+nx = 10
+ny = 10
 
 for i in np.linspace(-np.pi, np.pi, nx):
     for j in np.linspace(-np.pi, np.pi, ny):

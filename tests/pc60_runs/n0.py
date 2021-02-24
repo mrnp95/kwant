@@ -124,8 +124,8 @@ kx = []
 ky = []
 zak = []
 zak_real = []
-nx = 10
-ny = 10
+nx = 50
+ny = 50
 
 for i in np.linspace(-np.pi, np.pi, nx):
     for j in np.linspace(-np.pi, np.pi, ny):
@@ -146,8 +146,8 @@ np.savetxt('./out/ky.txt', ky)
 
 # Plotting
 
-plot_surface_3d(n, nx, ny, energy, "Energy")
-plot_surface_3d(n, nx, ny, zak_real, "Zak_real")
+# plot_surface_3d(n, nx, ny, energy, "Energy")
+# plot_surface_3d(n, nx, ny, zak_real, "Zak_real")
 
-print("Delta_E= ",np.max(energy)-np.min(energy))
-print("Delta_Z= ",np.max(zak_real)-np.min(zak_real))
+print("Delta_E= ", np.max(energy)-np.min(energy))
+print("Delta_Z= ", np.max(zak_real)-np.min(zak_real))

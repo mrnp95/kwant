@@ -49,7 +49,7 @@ def berry_conn(A, omega, k, t, tau):
     Berry conenction.
     """
     conn = 0.5 * np.ones((2, 2))
-    dt = 2 * np.pi / (omega * 50000)
+    dt = 2 * np.pi / (omega * 5000)
     g = g_K(A, omega, k, t, tau)
     g_dt = g_K(A, omega, k, t + dt, tau)
     d_Phi = 1j * (np.log(g_dt / np.abs(g_dt)) - np.log(g / np.abs(g))) / dt
@@ -61,9 +61,9 @@ def zak_Phase(A, omega, k, tau):
     """
     Zak phase.
     """
-    dt = 2 * np.pi / (omega * 50000)
+    dt = 2 * np.pi / (omega * 5000)
     phase = 0.
-    for t in np.linspace(0., 2 * np.pi / omega, 50000):
+    for t in np.linspace(0., 2 * np.pi / omega, 5000):
         b_conn = berry_conn(A, omega, k, t, tau)
         phase = phase - dt * b_conn[0, 0]
     phase = phase * omega
@@ -71,9 +71,9 @@ def zak_Phase(A, omega, k, tau):
 
 
 def eps_WSL_n(A, k, tau, omega, n, zak_phase, sign):
-    dt = 2 * np.pi / (omega * 50000)
+    dt = 2 * np.pi / (omega * 5000)
     e_bar = 0.0
-    for t in np.linspace(0., 2 * np.pi / omega, 50000):
+    for t in np.linspace(0., 2 * np.pi / omega, 5000):
         e_bar = e_bar - dt * sign * np.abs(g_K(A, omega, k, t, tau))
     e_bar = e_bar * omega / (2 * np.pi)
     return e_bar + omega * (n + zak_phase / (2 * np.pi))
@@ -102,7 +102,8 @@ def plot_surface_3d(n, nx, ny, quantity, name):
                            linewidth=0, antialiased=False)
 
     # Customize the z axis.
-    ax.set_zlim(np.min(quantity) - 0.02, np.max(quantity) + 0.02)
+    d = np.max(quantity) - np.min(quantity)
+    ax.set_zlim(np.min(quantity) - 0.05*d, np.max(quantity) + 0.05*d)
     ax.zaxis.set_major_locator(LinearLocator(10))
     ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 
@@ -114,8 +115,8 @@ def plot_surface_3d(n, nx, ny, quantity, name):
 
 
 A = 0.8
-omega = 0.005
-tau = 0.01
+omega = 0.05
+tau = omega / 0.05
 n = 0.0
 
 
@@ -124,22 +125,23 @@ kx = []
 ky = []
 zak = []
 zak_real = []
-nx = 50
-ny = 50
-
+nx = 200
+ny = 200
+cnt = 0
 for i in np.linspace(-np.pi, np.pi, nx):
     for j in np.linspace(-np.pi, np.pi, ny):
         k = np.array([i, j])
         z_phase = zak_Phase(A, omega, k, tau)
         zak.append(z_phase)
         zak_real.append(np.real(z_phase))
-        e = eps_WSL_n(A, k, tau, omega, n, np.real(z_phase), +1.)
+        e = eps_WSL_n(A, k, tau, omega, n, 0., +1.)
         energy.append(e)
-        print(e)
+        print(cnt)
+        cnt+= 1
         if np.abs(e) <= 0.005:
             kx.append(i)
             ky.append(j)
-np.savetxt('./out/zak.txt', zak)
+np.savetxt('./out/zak.txt', np.array(zak))
 np.savetxt('./out/e.txt', energy)
 np.savetxt('./out/kx.txt', kx)
 np.savetxt('./out/ky.txt', ky)
@@ -147,7 +149,7 @@ np.savetxt('./out/ky.txt', ky)
 # Plotting
 
 # plot_surface_3d(n, nx, ny, energy, "Energy")
-# plot_surface_3d(n, nx, ny, zak_real, "Zak_real")
+# plot_surface_3d(n, nx, ny, np.abs(zak_real), "Zak_real")
 
 print("Delta_E= ", np.max(energy)-np.min(energy))
 print("Delta_Z= ", np.max(zak_real)-np.min(zak_real))

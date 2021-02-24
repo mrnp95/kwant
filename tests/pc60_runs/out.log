@@ -1,0 +1,16 @@
+Low frequency calculations for topological WSM!
+Traceback (most recent call last):
+  File "./n0.py", line 149, in <module>
+    plot_surface_3d(n, nx, ny, energy, "Energy")
+  File "./n0.py", line 86, in plot_surface_3d
+    fig = plt.figure()
+  File "/usr/lib/python3/dist-packages/matplotlib/pyplot.py", line 539, in figure
+    **kwargs)
+  File "/usr/lib/python3/dist-packages/matplotlib/backend_bases.py", line 171, in new_figure_manager
+    return cls.new_figure_manager_given_figure(num, fig)
+  File "/usr/lib/python3/dist-packages/matplotlib/backends/backend_tkagg.py", line 1049, in new_figure_manager_given_figure
+    window = Tk.Tk(className="matplotlib")
+  File "/usr/lib/python3.6/tkinter/__init__.py", line 2020, in __init__
+    self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+_tkinter.TclError: no display name and no $DISPLAY environment variable
+Done!

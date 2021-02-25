@@ -127,7 +127,7 @@ zak = []
 zak_real = []
 nx = 200
 ny = 200
-cnt = 0
+# cnt = 0
 for i in np.linspace(-np.pi, np.pi, nx):
     for j in np.linspace(-np.pi, np.pi, ny):
         k = np.array([i, j])
@@ -136,8 +136,8 @@ for i in np.linspace(-np.pi, np.pi, nx):
         zak_real.append(np.real(z_phase))
         e = eps_WSL_n(A, k, tau, omega, n, 0., +1.)
         energy.append(e)
-        print(cnt)
-        cnt+= 1
+        # print(cnt)
+        # cnt+= 1
         if np.abs(e) <= 0.005:
             kx.append(i)
             ky.append(j)
